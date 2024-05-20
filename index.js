@@ -8,7 +8,7 @@ const port = process.env.PORT || 4000;
 app.use(express.static(path.join(__dirname)));
 
 app.get('/favicon.ico', (req, res) => (
-       res.status(200).sendFile('favicon.ico', {root: __dirname})
+       res.status(200).sendFile(path.join(__dirname, 'favicon.ico'))
 ));
 
 app.get('/api', async (req, res) => {
