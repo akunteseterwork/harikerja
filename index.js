@@ -7,6 +7,10 @@ const port = process.env.PORT || 4000;
 
 app.use(express.static(path.join(__dirname)));
 
+app.get('/favicon.ico', (req, res) => (
+       res.status(200).sendFile('favicon.ico', {root: __dirname})
+));
+
 app.get('/api', async (req, res) => {
     try {
         const calendarData = await scrapeCalendar();
