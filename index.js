@@ -5,6 +5,8 @@ const scrapeCalendar = require('./tanggalan');
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(express.static(path.join(__dirname)));
+
 app.get('/api', async (req, res) => {
     try {
         const calendarData = await scrapeCalendar();
