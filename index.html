@@ -118,33 +118,11 @@
             background-color: #fff;
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const darkModeEnabled = localStorage.getItem('dark-mode');
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            if (darkModeEnabled === 'true') {
-                document.body.classList.add('dark-mode');
-                darkModeToggle.checked = true;
-            } else {
-                document.body.classList.add('light-mode');
-                darkModeToggle.checked = false;
-            }
-
-            darkModeToggle.addEventListener('change', toggleDarkMode);
-        });
-
-        function toggleDarkMode() {
-            const isChecked = document.getElementById('darkModeToggle').checked;
-            document.body.classList.toggle('dark-mode', isChecked);
-            document.body.classList.toggle('light-mode', !isChecked);
-            localStorage.setItem('dark-mode', isChecked);
-        }
-    </script>
 </head>
-<body class="dark-mode">
+<body>
     <div class="toggle-switch">
         <label class="switch">
-            <input type="checkbox" id="darkModeToggle" checked>
+            <input type="checkbox" id="darkModeToggle">
             <span class="slider"></span>
         </label>
     </div>
@@ -156,8 +134,15 @@
     </div>
 
     <script>
+        function toggleDarkMode() {
+            const isChecked = document.getElementById('darkModeToggle').checked;
+            document.body.classList.toggle('dark-mode', isChecked);
+            document.body.classList.toggle('light-mode', !isChecked);
+            localStorage.setItem('dark-mode', isChecked);
+        }
+
         function syntaxHighlight(json) {
-            json = json.replace(/&/g, '&amp;').replace(/<//g, '&lt;').replace(/>/g, '&gt;');
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|\b(-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)\b)/g, function(match) {
                 var cls = 'number';
                 if (/^"/.test(match)) {
@@ -185,6 +170,16 @@
                 document.getElementById('calendar-data').textContent = 'Failed to load data';
                 console.error('Error fetching data:', error);
             });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeEnabled = localStorage.getItem('dark-mode') === 'true';
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            document.body.classList.toggle('dark-mode', darkModeEnabled);
+            document.body.classList.toggle('light-mode', !darkModeEnabled);
+            darkModeToggle.checked = darkModeEnabled;
+
+            darkModeToggle.addEventListener('change', toggleDarkMode);
+        });
     </script>
     <style>
         .key {
