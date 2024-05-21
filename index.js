@@ -1,9 +1,12 @@
 const express = require('express');
 const path = require('path');
 const scrapeCalendar = require('./tanggalan');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 4000;
+
+app.use(cors());
 
 app.use(express.static(path.join(__dirname)));
 
